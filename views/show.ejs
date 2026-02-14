@@ -1,0 +1,64 @@
+<%- include('partials/header') %>
+
+<% if (typeof message !== 'undefined' && message) { %>
+    <div class="message success">
+        <%= message %>
+    </div>
+<% } %>
+
+<article class="post-full">
+    <header class="post-header">
+        <div class="post-meta">
+            <span class="post-date">
+                📅 Published: <%= new Date(post.createdAt).toLocaleDateString('en-US', { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                }) %>
+            </span>
+            <% if (post.updatedAt !== post.createdAt) { %>
+                <span class="post-updated">
+                    ✏️ Updated: <%= new Date(post.updatedAt).toLocaleDateString('en-US', { 
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric'
+                    }) %>
+                </span>
+            <% } %>
+        </div>
+        <h1 class="post-title"><%= post.title %></h1>
+        <div class="post-author-info">
+            <span class="author-avatar">👤</span>
+            <span class="author-name">By <%= post.author %></span>
+        </div>
+        <% if (post.tags && post.tags.length > 0) { %>
+            <div class="post-tags">
+                <% post.tags.forEach(tag => { %>
+                    <a href="/tag/<%= tag %>" class="tag">#<%= tag %></a>
+                <% }) %>
+            </div>
+        <% } %>
+    </header>
+
+    <div class="post-content">
+        <%- post.content.replace(/\n/g, '<br>') %>
+    </div>
+
+    <footer class="post-footer">
+        <div class="post-actions">
+            <a href="/posts/<%= post.filename %>/edit" class="btn btn-edit">
+                ✏️ Edit Post
+            </a>
+            <form action="/posts/<%= post.filename %>/delete" method="POST" class="delete-form">
+                <button type="submit" class="btn btn-delete">
+                    🗑️ Delete Post
+                </button>
+            </form>
+        </div>
+        <a href="/" class="btn btn-back">← Back to All Posts</a>
+    </footer>
+</article>
+
+<%- include('partials/footer') %>

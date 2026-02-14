@@ -1,0 +1,27 @@
+<%- include('partials/header') %>
+
+<section class="error-page">
+    <div class="error-content">
+        <div class="error-icon">
+            <% if (error.status === 404) { %>
+                🔍
+            <% } else { %>
+                ⚠️
+            <% } %>
+        </div>
+        <h1 class="error-title">
+            <% if (error.status) { %>
+                Error <%= error.status %>
+            <% } else { %>
+                Oops!
+            <% } %>
+        </h1>
+        <p class="error-message"><%= message %></p>
+        <div class="error-actions">
+            <a href="/" class="btn btn-primary">← Go Back Home</a>
+            <a href="/posts/new" class="btn btn-secondary">Create New Post</a>
+        </div>
+    </div>
+</section>
+
+<%- include('partials/footer') %>

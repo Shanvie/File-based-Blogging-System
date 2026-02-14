@@ -1,0 +1,28 @@
+</main>
+<footer class="site-footer">
+    <div class="footer-content">
+        <p>&copy; <%= currentYear %> File-Based Blog System. Built with Node.js & Express.</p>
+        <p>A simple blogging platform using file storage.</p>
+    </div>
+</footer>
+<script>
+    // Confirm delete action
+    document.querySelectorAll('.delete-form').forEach(form => {
+        form.addEventListener('submit', (e) => {
+            if (!confirm('Are you sure you want to delete this post? This action cannot be undone.')) {
+                e.preventDefault();
+            }
+        });
+    });
+
+    // Auto-hide messages
+    const messages = document.querySelectorAll('.message');
+    messages.forEach(msg => {
+        setTimeout(() => {
+            msg.style.opacity = '0';
+            setTimeout(() => msg.remove(), 300);
+        }, 3000);
+    });
+</script>
+</body>
+</html>

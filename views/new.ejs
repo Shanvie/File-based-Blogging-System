@@ -1,0 +1,70 @@
+<%- include('partials/header') %>
+
+<section class="form-page">
+    <h1>Create New Blog Post</h1>
+    <p class="form-subtitle">Share your thoughts with the world</p>
+
+    <% if (typeof error !== 'undefined' && error) { %>
+        <div class="message error">
+            ⚠️ <%= error %>
+        </div>
+    <% } %>
+
+    <form action="/posts" method="POST" class="post-form">
+        <div class="form-group">
+            <label for="title">Post Title *</label>
+            <input 
+                type="text" 
+                id="title" 
+                name="title" 
+                placeholder="Enter a captivating title..."
+                value="<%= typeof formData !== 'undefined' && formData.title ? formData.title : '' %>"
+                required
+                autofocus
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="author">Author Name</label>
+            <input 
+                type="text" 
+                id="author" 
+                name="author" 
+                placeholder="Your name (optional)"
+                value="<%= typeof formData !== 'undefined' && formData.author ? formData.author : '' %>"
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="tags">Tags</label>
+            <input 
+                type="text" 
+                id="tags" 
+                name="tags" 
+                placeholder="technology, programming, nodejs (comma-separated)"
+                value="<%= typeof formData !== 'undefined' && formData.tags ? formData.tags : '' %>"
+            >
+            <small class="form-hint">Separate tags with commas</small>
+        </div>
+
+        <div class="form-group">
+            <label for="content">Content *</label>
+            <textarea 
+                id="content" 
+                name="content" 
+                placeholder="Write your blog post content here..."
+                rows="15"
+                required
+            ><%= typeof formData !== 'undefined' && formData.content ? formData.content : '' %></textarea>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                📝 Publish Post
+            </button>
+            <a href="/" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</section>
+
+<%- include('partials/footer') %>

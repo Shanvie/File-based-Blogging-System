@@ -1,0 +1,64 @@
+<%- include('partials/header') %>
+
+<section class="page-header">
+    <h1>
+        <% if (typeof currentTag !== 'undefined') { %>
+            Posts tagged: "<%= currentTag %>"
+        <% } else if (typeof searchQuery !== 'undefined' && searchQuery) { %>
+            Search Results for: "<%= searchQuery %>"
+        <% } else { %>
+            Latest Blog Posts
+        <% } %>
+    </h1>
+    <p class="subtitle">Discover stories, ideas, and insights</p>
+</section>
+
+<% if (typeof message !== 'undefined' && message) { %>
+    <div class="message success">
+        <%= message %>
+    </div>
+<% } %>
+
+<section class="posts-grid">
+    <% if (posts && posts.length > 0) { %>
+        <% posts.forEach(post => { %>
+            <article class="post-card">
+                <div class="post-card-header">
+                    <span class="post-date">
+                        📅 <%= new Date(post.createdAt).toLocaleDateString('en-US', { 
+                            year: 'numeric', 
+                            month: 'long', 
+                            day: 'numeric' 
+                        }) %>
+                    </span>
+                    <span class="post-author">✍️ <%= post.author %></span>
+                </div>
+                <h2 class="post-title">
+                    <a href="/posts/<%= post.filename %>"><%= post.title %></a>
+                </h2>
+                <p class="post-excerpt">
+                    <%= post.content.substring(0, 150) %><%= post.content.length > 150 ? '...' : '' %>
+                </p>
+                <% if (post.tags && post.tags.length > 0) { %>
+                    <div class="post-tags">
+                        <% post.tags.forEach(tag => { %>
+                            <a href="/tag/<%= tag %>" class="tag">#<%= tag %></a>
+                        <% }) %>
+                    </div>
+                <% } %>
+                <div class="post-card-footer">
+                    <a href="/posts/<%= post.filename %>" class="btn btn-read">Read More →</a>
+                </div>
+            </article>
+        <% }) %>
+    <% } else { %>
+        <div class="no-posts">
+            <div class="no-posts-icon">📭</div>
+            <h3>No posts found</h3>
+            <p>Be the first to share your thoughts!</p>
+            <a href="/posts/new" class="btn btn-primary">Create Your First Post</a>
+        </div>
+    <% } %>
+</section>
+
+<%- include('partials/footer') %>

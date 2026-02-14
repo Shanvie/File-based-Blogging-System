@@ -1,0 +1,76 @@
+<%- include('partials/header') %>
+
+<section class="form-page">
+    <h1>Edit Blog Post</h1>
+    <p class="form-subtitle">Update your post content</p>
+
+    <% if (typeof error !== 'undefined' && error) { %>
+        <div class="message error">
+            ⚠️ <%= error %>
+        </div>
+    <% } %>
+
+    <form action="/posts/<%= post.filename %>" method="POST" class="post-form">
+        <div class="form-group">
+            <label for="title">Post Title *</label>
+            <input 
+                type="text" 
+                id="title" 
+                name="title" 
+                placeholder="Enter a captivating title..."
+                value="<%= post.title %>"
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="author">Author Name</label>
+            <input 
+                type="text" 
+                id="author" 
+                name="author" 
+                placeholder="Your name (optional)"
+                value="<%= post.author %>"
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="tags">Tags</label>
+            <input 
+                type="text" 
+                id="tags" 
+                name="tags" 
+                placeholder="technology, programming, nodejs (comma-separated)"
+                value="<%= post.tags ? post.tags.join(', ') : '' %>"
+            >
+            <small class="form-hint">Separate tags with commas</small>
+        </div>
+
+        <div class="form-group">
+            <label for="content">Content *</label>
+            <textarea 
+                id="content" 
+                name="content" 
+                placeholder="Write your blog post content here..."
+                rows="15"
+                required
+            ><%= post.content %></textarea>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                💾 Update Post
+            </button>
+            <a href="/posts/<%= post.filename %>" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+
+    <div class="post-meta-info">
+        <p>📅 Created: <%= new Date(post.createdAt).toLocaleString() %></p>
+        <% if (post.updatedAt !== post.createdAt) { %>
+            <p>✏️ Last Updated: <%= new Date(post.updatedAt).toLocaleString() %></p>
+        <% } %>
+    </div>
+</section>
+
+<%- include('partials/footer') %>
